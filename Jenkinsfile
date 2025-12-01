@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { "python 3.10" }
+    }
 
     stages {
 

@@ -2,25 +2,31 @@ pipeline {
     agent any
 
     stages {
-        stage('Install Python') {
+        stage('Checkout Code') {
             steps {
-                sh '''
-                apt-get update
-                apt-get install -y python3 python3-pip
-                '''
+                git branch: 'main', url: 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix'
             }
         }
 
-        stage('Install Requirements') {
+        stage('Say Hello') {
             steps {
-                sh 'pip3 install -r requirements.txt'
+                echo "Pipeline is running, Bharat!"
             }
         }
 
-        stage('Run Python App') {
+        stage('List Files') {
             steps {
-                sh 'python3 bharat.py'
+                sh 'ls -l'
             }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed!"
         }
     }
 }

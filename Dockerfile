@@ -1,4 +1,4 @@
-FROM python:3.1.0
+FROM python:3.10
 WORKDIR /app
 COPY . /bharat.py
 RUN pip install -r requirement.txt

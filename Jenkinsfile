@@ -1,39 +1,26 @@
 pipeline {
-    agent {
-        docker { image 'python:3.10' }
-    }
+    agent any
 
     stages {
-        stage('Clone Code') {
+        stage('Install Python') {
             steps {
-                echo "Repository downloaded!"
+                sh '''
+                apt-get update
+                apt-get install -y python3 python3-pip
+                '''
             }
         }
 
         stage('Install Requirements') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
 
         stage('Run Python App') {
             steps {
-                sh 'python bharat.py'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker --version'
-                sh 'docker build -t bharat-image .'
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                sh 'docker run -d --name bharat-container bharat-image'
+                sh 'python3 bharat.py'
             }
         }
     }
 }
-

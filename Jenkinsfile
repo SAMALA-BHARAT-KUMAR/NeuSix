@@ -9,18 +9,7 @@ pipeline {
             }
         }
 
-        stage('Build and Run Java') {
-            steps {
-                script {
-                    // Use a valid Java Docker image
-                    docker.image('my-openjdk:17') {
-                        sh 'javac bharat.java'
-                        sh 'java Bharat'
-                    }
-                }
-            }
-        }
-
+        
         stage('Run Python') {
             steps {
                 script {

@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Use Java Docker image
-                    docker.image('openjdk:17').inside {
+                    docker.image('openjdk:17-jdk').inside {
                         sh 'javac bharat.java'
                         sh 'java Bharat'
                     }

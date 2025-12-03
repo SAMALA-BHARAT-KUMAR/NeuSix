@@ -1,14 +1,10 @@
 pipeline {
     agent any
-    
-    environment {
-        DOCKER_IMAGE = 'python:3.12'  // Python Docker image
-    }
 
     stages {
         stage('Pull Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix.git'
+                git 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix.git'
                 echo 'Code pulled from GitHub!'
             }
         }
@@ -16,8 +12,9 @@ pipeline {
         stage('Run Python in Docker') {
             steps {
                 script {
-                    docker.image(DOCKER_IMAGE).inside {
-                        sh 'python3 bharat.py'
+                    // Pull Python Docker image and run the Python script
+                    docker.image('python:3.12').inside {
+                        sh 'python bharat.py'
                     }
                 }
             }
@@ -26,10 +23,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'Pipeline executed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo 'Pipeline failed. Check the logs!'
         }
     }
 }

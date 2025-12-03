@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        JAVA_IMAGE = 'openjdk:17-jdk'
-        PYTHON_IMAGE = 'python:3.12'
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
@@ -17,8 +12,8 @@ pipeline {
         stage('Build and Run Java') {
             steps {
                 script {
-                    // Build and run Java in a temporary Docker container
-                    docker.image(env.JAVA_IMAGE).inside('--rm') {
+                    // Use a valid Java Docker image
+                    docker.image('openjdk:17').inside('--rm') {
                         sh 'javac bharat.java'
                         sh 'java Bharat'
                     }
@@ -29,8 +24,8 @@ pipeline {
         stage('Run Python') {
             steps {
                 script {
-                    // Run Python in a temporary Docker container
-                    docker.image(env.PYTHON_IMAGE).inside('--rm') {
+                    // Use a valid Python Docker image
+                    docker.image('python:3.12').inside('--rm') {
                         sh 'python bharat.py'
                     }
                 }
@@ -39,15 +34,11 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Pipeline finished, cleaning up workspace if needed.'
-            cleanWs()
-        }
         success {
-            echo 'Pipeline completed successfully! 🎉'
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed! Check the logs! ❌'
+            echo 'Pipeline failed. Check the logs!'
         }
     }
 }

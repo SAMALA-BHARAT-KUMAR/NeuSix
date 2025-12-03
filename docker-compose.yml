@@ -1,14 +1,1 @@
-version: '3'
-services:
-  python:
-    image: python:3.10-slim
-    volumes: 
-      - .:/app
-    working_directory: /app
-    command: python bharat.py
-  java:
-    image: eclipse-temurin:17-jdk-alpine
-    volumes: 
-      - .:/app
-    working_directory: /app
-    command: sh -c "javac bharat.java && java bharat"
+

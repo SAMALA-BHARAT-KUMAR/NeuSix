@@ -2,17 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Pull Code') {
+        stage('Checkout Code') {
             steps {
-                git 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix.git'
-                echo 'Code pulled from GitHub!'
+                git branch: 'main',
+                    url: 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix.git'
             }
         }
 
         stage('Run Python in Docker') {
             steps {
                 script {
-                    // Pull Python Docker image and run the Python script
                     docker.image('python:3.12').inside {
                         sh 'python bharat.py'
                     }
@@ -23,7 +22,7 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline executed successfully!'
+            echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed. Check the logs!'

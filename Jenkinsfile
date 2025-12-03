@@ -1,34 +1,15 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout Code') {
+        stage('Pull Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix'
-                echo "Repository cloned successfully!"
+                echo "Code pulled from GitHub!"
             }
         }
-
-        stage('Show Files') {
+        stage('Run Python') {
             steps {
-                sh 'ls -l'
+                sh 'python3 bharat.py'
             }
-        }
-
-        stage('Run Python App') {
-            steps {
-                // Run your Python script if python3 exists
-                sh 'python3 bharat.py || echo "Python not found, skipping execution"'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo "Pipeline completed successfully!"
-        }
-        failure {
-            echo "Pipeline failed!"
         }
     }
 }

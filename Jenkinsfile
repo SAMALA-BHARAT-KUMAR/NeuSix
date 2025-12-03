@@ -1,25 +1,21 @@
 pipeline {
-    agent any
-
+    agent {
+        docker { image 'python:3.10' }  // Jenkins will pull this image if not present
+    }
     stages {
         stage('Pull Code') {
             steps {
-                echo "Code pulled from GitHub!"
+                git 'https://github.com/SAMALA-BHARAT-KUMAR/NeuSix.git'
             }
         }
-        stage('Run Python') {
+        stage('Install Requirements') {
             steps {
-                sh 'python3 bharat.py'
+                sh 'pip install -r requirements.txt'
             }
         }
-        stage('Build Docker Image') {
+        stage('Run Python App') {
             steps {
-                sh 'docker build -t neu-six-image .'
-            }
-        }
-        stage('Run Docker Container') {
-            steps {
-                sh 'docker run --rm neu-six-image'
+                sh 'python bharat.py'
             }
         }
     }

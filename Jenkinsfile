@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     // Use Python Docker image
-                    docker.image('python:3.12').inside {
+                    docker.image('python:3.10').inside {
                         sh 'python bharat.py'
                     }
                 }

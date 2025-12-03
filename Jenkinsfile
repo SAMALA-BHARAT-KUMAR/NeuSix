@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     stages {
-
-        // Stage 1: Checkout Code
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -11,22 +9,22 @@ pipeline {
             }
         }
 
-        // Stage 2: Build Java
-        stage('Build Java') {
+        stage('Build and Run Java') {
             steps {
                 script {
-                    // Compile the Java file
-                    sh 'javac bharat.java'
-                    // Optionally run the Java program
-                    sh 'java Bharat'
+                    // Use Java Docker image
+                    docker.image('openjdk:17').inside {
+                        sh 'javac bharat.java'
+                        sh 'java Bharat'
+                    }
                 }
             }
         }
 
-        // Stage 3: Run Python in Docker
         stage('Run Python') {
             steps {
                 script {
+                    // Use Python Docker image
                     docker.image('python:3.12').inside {
                         sh 'python bharat.py'
                     }
